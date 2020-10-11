@@ -1,0 +1,4 @@
+# start notebook
+open Anaconda
+cd C:\Users\tress\Documents\Development\Harvard\Python
+jupyter notebook
