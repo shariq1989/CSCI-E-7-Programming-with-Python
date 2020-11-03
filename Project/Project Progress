@@ -1,0 +1,10 @@
+Project Progress
+- Write DB adapter
+- Write script to feed csv into db
+- (Optional) skip csv and feed directly into db
+- (Optional) unit testing
+- Use matplotlib or pandas to clean and visualize data
+	- All time, by year, by month amazon
+	- All time, by year, by month links
+	- top Domains
+	- users that submit the most links by domain

@@ -1,4 +1,5 @@
 # start notebook
-open Anaconda
-cd C:\Users\tress\Documents\Development\Harvard\Python
+conda activate
+cd ~\Documents\Harvard\Python
 jupyter notebook
+conda deactivate

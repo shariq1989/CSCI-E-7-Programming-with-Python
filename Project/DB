@@ -1,0 +1,19 @@
+Links
+varchar url
+date date_posted
+varchar author
+int thread_id
+
+
+CREATE TABLE links(
+	text		url
+	date 		date_posted
+	text	 	author
+	int 		thread_id
+	int			post_number
+);
+
+CREATE TABLE table(
+	int 		thread_id
+	text		thread_title
+);

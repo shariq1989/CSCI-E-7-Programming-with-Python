@@ -105,3 +105,8 @@ User Stories
 Problem statements
 template: 
 	title, opening sentence ()
+
+Definition of Ready
+	- no dependencies
+	- acceptence criteria
+	- def of done
