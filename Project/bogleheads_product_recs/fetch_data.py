@@ -1,5 +1,3 @@
-import csv
-
 import scrapy
 from urllib.parse import urlparse
 
@@ -15,8 +13,7 @@ class BogleheadsRecsSpider(scrapy.Spider):
     count = 0
     domains = {}
 
-    # Collects all threads on the Bogleheads front page
-    # Calls parse_posts to process thread objects
+    # point engine to URL and start scraping
     def parse(self, response, **kwargs):
         # fetch the thread ID of each thread on the front page
         threads = self.collect_threads(response)
@@ -39,6 +36,7 @@ class BogleheadsRecsSpider(scrapy.Spider):
         thread_set = list(set(threads_list))
         return thread_set
 
+    # extracts thread ID from a thread's URL
     def extract_thread_id(self, link):
         # if the link leads to a thread
         if 't=' in link:
@@ -90,6 +88,7 @@ class BogleheadsRecsSpider(scrapy.Spider):
                 # get all post bodies in a page
                 self.process_posts_from_page(thread, False)
 
+    # check to see whether the entire thread is already stored
     def already_in_db(self, thread):
         db = MyDatabase()
         thread_id = self.extract_thread_id(thread.url)
@@ -106,6 +105,7 @@ class BogleheadsRecsSpider(scrapy.Spider):
             return 50
         return highest_page[0]
 
+    # store all the links in a page
     def process_posts_from_page(self, thread, multi_page=True):
         # get links if they are in a post
         links = thread.css('div.content a::attr(href)').getall()
@@ -123,7 +123,7 @@ class BogleheadsRecsSpider(scrapy.Spider):
                 else:
                     self.domains[domain] = 1
                 page = None
-                if (multi_page):
+                if multi_page:
                     page = self.extract_page_num(thread.url)
                 link = Link(link, thread_id, thread.url, thread_title, domain, page)
                 link.write_to_database()
@@ -131,10 +131,12 @@ class BogleheadsRecsSpider(scrapy.Spider):
             print('Processed links', self.count)
             print('Domains', self.domains)
 
+    # extract page number from a thread URL
     def extract_page_num(self, link):
         # extracts page number from url
         return link.rsplit('=', 1)[1]
 
+    # extract the total number of posts in a thread
     def extract_num_posts(self, thread):
         # get pagination info so that URL's for pages can be generated
         pagination_info = thread.css('div.pagination::text').get()

@@ -19,7 +19,6 @@ class Link():
                 'PostgreSQL 12.4 (Ubuntu 12.4-1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 10.2.0-5ubuntu2) 10.2.0, 64-bit',)
             # display the PostgreSQL database server version
             db_version = db.query_fetch("SELECT version()")
-            assert db_version == version, 'DB conn failed'
             # check to see if thread is already in the db
             thread_id = db.query_fetch('SELECT * FROM threads WHERE thread_id=(%s) AND title=(%s)',
                                        (self.thread_id, self.thread_title))
